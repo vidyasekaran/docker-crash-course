@@ -16,4 +16,4 @@ docker run -p 8100:8100 --network=web-application-mysql-network --name=currency-
 
 eureka naming service
 
-docker run -p 8761:8761 --network=web-application-mysql-network --network=web-application-mysql-network --name=eureka-naming-service vidguru/netflix-eureka-naming-server:0.0.1-SNAPSHOT
+docker run -p 8761:8761 --name naming-server --network=web-application-mysql-network vidguru/netflix-eureka-naming-server:0.0.1-SNAPSHOT
