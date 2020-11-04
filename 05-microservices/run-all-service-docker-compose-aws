@@ -1,0 +1,19 @@
+
+Playing with custom networks and running all services as part of docker network
+
+docker network ls
+docker network create web-application-mysql-network
+docker inspect web-application-mysql-network
+
+[root@ip-172-31-39-218 currency-exchange-service]# docker run -p 8000:8000 --network=web-application-mysql-network --name=currency-exchange-service vidguru/currency-exchange-service:0.0.1-SNAPSHOT
+
+---
+
+docker run -p 8100:8100 --network=web-application-mysql-network --name=currency-conversion-service --env CURRENCY_EXCHANGE_URI=http://currency-exchange-service:8000 -d vidguru/currency-exchange-service:0.0.1-SNAPSHOT
+
+
+
+
+eureka naming service
+
+docker run -p 8761:8761 --network=web-application-mysql-network --network=web-application-mysql-network --name=eureka-naming-service vidguru/netflix-eureka-naming-server:0.0.1-SNAPSHOT
