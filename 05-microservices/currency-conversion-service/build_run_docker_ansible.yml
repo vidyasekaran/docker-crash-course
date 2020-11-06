@@ -1,0 +1,27 @@
+- hosts: all
+  become: true
+  tasks:
+  - name: stop if we have old docker container
+    command: docker stop currency-conversion-service
+    ignore_errors: yes
+
+  - name: remove stopped docker container
+    command: docker rm currency-conversion-service
+    ignore_errors: yes
+
+  - name: remove current docker image
+    command: docker rmi currency-conversion-service
+    ignore_errors: yes
+#    register: result
+#    failed_when:
+#      - result.rc == 0
+#      - '"docker" not in result.stdout'
+
+
+  - name: building docker image
+    command: docker build -t currency-conversion-service .
+    args:
+      chdir: /home/dockeradmin/05-microservices/currency-conversion-service
+
+  - name: creating docker image
+    command: docker run -d --name currency-conversion-service -p 8080:8080 currency-conversion-service
